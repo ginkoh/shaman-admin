@@ -20,6 +20,7 @@ from shaman_admin import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('chat/', include('chat.urls'))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
