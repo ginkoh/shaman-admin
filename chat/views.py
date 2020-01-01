@@ -1,6 +1,8 @@
 from django.shortcuts import render
+from .models import Chat
 
 
 # Create your views here.
 def index(request):
-    return render(request, 'chat/index.html')
+    chats = Chat.objects.all()
+    return render(request, 'chat/index.html', {'chats': chats})

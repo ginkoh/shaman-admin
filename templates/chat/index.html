@@ -1,0 +1,5 @@
+{% for chat in chats %}
+    {% for message in chat.chat_messages.all %}
+        <li>{{ message }}</li>
+    {% endfor %}
+{% endfor %}
