@@ -9,9 +9,13 @@ class ChatMessage(models.Model):
     # message_html
 
     message_author = models.ForeignKey(ChatUser, on_delete=models.CASCADE, related_name='message_author')
-    
+
     message_status = models.CharField(default='open', max_length=255, choices=[
         ('open', 'open'), ('closed', 'closed'), ('sleep', 'sleep')
+    ])
+
+    message_channel = models.CharField(default='chat', max_length=255, choices=[
+        ('chat', 'chat'), ('email', 'email')
     ])
 
     reopen_time = models.DateTimeField(default=None, null=True, blank=True)
