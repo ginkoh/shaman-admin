@@ -1,11 +1,14 @@
 from django.db import models
-from django.contrib.auth.models import User
 import uuid
 
 
 class ChatUser(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    # TODO: Set extra infos from the API values of the user. Such as username in the system, user infos...
 
+    username = models.CharField(max_length=255)
+    email = models.CharField(max_length=255)
+
+    # "Is registed on the system".
     is_registered = models.BooleanField(default=False)
 
     is_operator = models.BooleanField(default=False)
@@ -15,6 +18,6 @@ class ChatUser(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 
     def __str__(self):
-        return self.user.username
+        return self.username
 
     # def if is operator add more fields?...

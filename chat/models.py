@@ -6,7 +6,15 @@ from contact.models import ChatUser
 
 class ChatMessage(models.Model):
     message = models.TextField()
-    message_author = models.ForeignKey(ChatUser, on_delete=models.CASCADE)
+    # message_html
+
+    message_author = models.ForeignKey(ChatUser, on_delete=models.CASCADE, related_name='message_author')
+    
+    message_status = models.CharField(default='open', max_length=255, choices=[
+        ('open', 'open'), ('closed', 'closed'), ('sleep', 'sleep')
+    ])
+
+    reopen_time = models.DateTimeField(default=None, null=True, blank=True)
 
     editable = models.BooleanField(default=False)
     deletable = models.BooleanField(default=False)
@@ -35,5 +43,5 @@ class Chat(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 
     def __str__(self):
-        return self.chat_users.first().user.username
+        return self.chat_users.first().username
         # return "{}".format(self.pk)
