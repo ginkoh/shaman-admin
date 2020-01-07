@@ -8,6 +8,8 @@ class ChatUser(models.Model):
     username = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
 
+    profile_picture = models.ImageField(upload_to='images/users/profile_pictures')
+
     # "Is registed on the system".
     is_registered = models.BooleanField(default=False)
 
