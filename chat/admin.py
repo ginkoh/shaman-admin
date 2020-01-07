@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Chat, ChatMessage
+from .models import ChatConversation, ChatMessage
 
 
 # Register your models here.
@@ -11,5 +11,5 @@ class ChatMessageAdmin(admin.ModelAdmin):
     list_display = ['uuid', 'message_author', 'created', 'updated', 'editable']
 
 
-admin.site.register(Chat, ChatAdmin)
+admin.site.register(ChatConversation, ChatAdmin)
 admin.site.register(ChatMessage, ChatMessageAdmin)
