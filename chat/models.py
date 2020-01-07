@@ -2,6 +2,7 @@ from django.db import models
 import uuid
 from django.utils import timezone
 from contact.models import ChatUser
+from admin_setup.models import AdminSetup
 
 
 class ChatMessage(models.Model):
@@ -20,6 +21,8 @@ class ChatMessage(models.Model):
 
     reopen_time = models.DateTimeField(default=None, null=True, blank=True)
 
+    from_operator = models.BooleanField(default=True)
+
     editable = models.BooleanField(default=False)
     deletable = models.BooleanField(default=False)
 
@@ -32,14 +35,20 @@ class ChatMessage(models.Model):
 
 
 # Create your models here.
-class Chat(models.Model):
+class ChatConversation(models.Model):
     # The customer and the operators in the conversation.
     # It also can be done dividing operators and customers, but if done, the message has to hold two foreign keys,
     # which one of them will be nullable (or the message is from an operator or from a customer). Said that, i prefer
     # this way.
-    chat_users = models.ManyToManyField(ChatUser, related_name='chat_users', blank=True)
+    # Get operator name and operator profile picture from here.
+    # chat_users = models.ManyToManyField(ChatUser, related_name='chat_users', blank=True)
+    message_app = models.ForeignKey(AdminSetup, on_delete=models.CASCADE, related_name='message_app')
+
+    operator = models.ForeignKey(ChatUser, on_delete=models.CASCADE, related_name='operator')
+    customer = models.ForeignKey(ChatUser, on_delete=models.CASCADE, related_name='customer')
 
     # All the messages of the chat.
+    # Get last message from here. DON'T ACCEPT HTML MESSAGES FROM THE USER, IF IT IS NOT FROM THE EMAIL CHANNEL.
     messages = models.ManyToManyField(ChatMessage, blank=True)
 
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
@@ -47,5 +56,5 @@ class Chat(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 
     def __str__(self):
-        return self.chat_users.first().username
+        return self.customer.username
         # return "{}".format(self.pk)
