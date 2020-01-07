@@ -84,6 +84,46 @@ TEMPLATES = [
     },
 ]
 
+DJANGO_COLORS="error=red/blue;success=magenta"
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'formatters': {
+        'verbose': {
+            '()': 'djangocolors_formatter.DjangoColorsFormatter', # colored output
+            'format': '%(levelname)s %(name)s %(asctime)s %(module)s %(process)d %(thread)d %(pathname)s@%(lineno)s: %(message)s'
+        },
+        'simple': {
+            '()': 'djangocolors_formatter.DjangoColorsFormatter', # colored output
+            'format': '%(levelname)s %(name)s %(filename)s@%(lineno)s: %(message)s'
+        },
+    },
+     # omitting the handler 'level' setting so that all messages are passed and we do level filtering in 'loggers'
+    'handlers': {
+        'console':{
+            'class':'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+        'mail_admins': {
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler',
+            'formatter': 'verbose'
+        }
+    },
+    'loggers': {
+        '': {
+            'handlers': ['mail_admins', 'console'],
+            'level': 'WARNING',
+        },
+    }
+}
+
 WSGI_APPLICATION = 'shaman_admin.wsgi.application'
 ASGI_APPLICATION = "shaman_admin.routing.application"
 CHANNEL_LAYERS = {
