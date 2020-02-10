@@ -45,7 +45,6 @@ def conversations_from_user(request, admin_app_uuid, user_uuid):
 
 def conversation(request, admin_app_uuid, conversation_uuid):
     # TODO: GET SOME THINGS FROM THE USER SESSION.
-    # TODO: MAKE SESSION ID (CLIENT SIDE?).
     message_limit = limit_number(request.GET.get('limit'))
 
     conversation = ChatConversation.objects.get(
@@ -126,11 +125,5 @@ def messages_from_user(request, admin_app_uuid, user_uuid):
     return JsonResponse(messages, safe=False)
 
 
-def room(request, room_name):
-    return HttpResponse(json.dumps({
-        'room_name': 'one_room'
-    }), content_type='application/json')
-    # return render(request, 'chat/room.html', {
-    #     # 'room_name_json': mark_safe(json.dumps(room_name))
-    #     'room_name_json': 'one_room'
-    # })
+def messages_from_operator(request, operator_uuid):
+    pass
