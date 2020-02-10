@@ -44,8 +44,6 @@ INSTALLED_APPS = [
     'chat',
     'company',
     'contact',
-    'dashboard',
-    'inbox'
 ]
 
 REST_FRAMEWORK = {

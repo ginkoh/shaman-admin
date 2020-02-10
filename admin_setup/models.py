@@ -3,7 +3,7 @@ import uuid
 
 
 # Create your models here.
-class AdminSetup(models.Model):
+class Entity(models.Model):
     app_name = models.CharField(max_length=255)
     # app_key =
 

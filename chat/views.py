@@ -1,15 +1,10 @@
 import json
 
-from django.shortcuts import render, HttpResponse, get_object_or_404
+from django.shortcuts import render, HttpResponse
 from django.http import JsonResponse
-from django.core import serializers
-from django.utils.safestring import mark_safe
-from django.utils import timezone
 from .models import ChatConversation, ChatMessage
 from .functions import limit_number
 from contact.models import ChatUser
-from django.forms.models import model_to_dict
-from django.core.serializers.json import DjangoJSONEncoder
 from .functions import serialize_foreign_key
 
 
@@ -51,7 +46,6 @@ def conversations_from_user(request, admin_app_uuid, user_uuid):
 def conversation(request, admin_app_uuid, conversation_uuid):
     # TODO: GET SOME THINGS FROM THE USER SESSION.
     # TODO: MAKE SESSION ID (CLIENT SIDE?).
-    # TODO: LEARN ABOUT MANY TO MANY, UNIQUE_TOGETHER, AND FOREIGN KEYS.
     message_limit = limit_number(request.GET.get('limit'))
 
     conversation = ChatConversation.objects.get(

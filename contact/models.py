@@ -1,19 +1,15 @@
 from django.db import models
+from company.models import Company
 import uuid
 
 
 class ChatUser(models.Model):
-    # TODO: Set extra infos from the API values of the user. Such as username in the system, user infos...
-
     username = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
 
-    profile_picture = models.ImageField(upload_to='images/users/profile_pictures')
-
-    # "Is registed on the system".
+    # "Is registered on the system".
     is_registered = models.BooleanField(default=False)
-
-    is_operator = models.BooleanField(default=False)
+    user_company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True, blank=True)
 
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
